@@ -2,7 +2,7 @@
 
 Repository created to storage all my back-end studies content.
 
-All content found here is created by me, following or based on my back-end journey through [DIO](dio.me), [Microsoft](learn.microsoft.com), [FreeCodeCamp](freecodecamp.org) aswell as books like my favorite [C# Players Guide](https://csharpplayersguide.com/).
+All content found here is created by me, following or based on my back-end journey through [DIO](https://www.dio.me/), [Microsoft](https://learn.microsoft.com/pt-br/training/), [FreeCodeCamp](https://www.freecodecamp.org/) aswell as books like my favorite [C# Players Guide](https://csharpplayersguide.com/).
 
 Keep on coding... 🧑🏻‍💻
 
