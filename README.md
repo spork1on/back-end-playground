@@ -1,5 +1,5 @@
 # back-end-playground
-A comprehensive collection of my back-end development studies.
+A collection of my back-end development studies.
 
 ## Table of Contents
 - [Description](#description)
@@ -23,3 +23,5 @@ If you have any questions or suggestions, feel free to contact me:
 
 ## Top Languages
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=spork1on&layout=compact)
+
+Keep on coding...
