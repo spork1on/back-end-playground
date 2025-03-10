@@ -1,14 +1,5 @@
 # back-end-playground
-A collection of my back-end development studies.
-
-## Table of Contents
-- [Description](#description)
-- [Sources](#sources)
-- [Contact](#contact)
-- [Top Languages](#top-languages)
-
-## Description
-This repository was created to store all the content from my back-end studies.
+A collection of all my back-end development studies.
 
 ## Sources
 All content found here is created by me, following or based on my back-end journey through:
@@ -24,4 +15,4 @@ If you have any questions or suggestions, feel free to contact me:
 ## Top Languages
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=spork1on&layout=compact)
 
-Keep on coding...
+Keep on coding...   
