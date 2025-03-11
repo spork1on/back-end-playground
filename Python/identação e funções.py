@@ -1,0 +1,2 @@
+#A identação em python é responsável pela execução do código, que deve ser identado para evitar erros.
+#como não há ; no python, ele entende o comeco e final de um bloco de código, de um método, etc com base na identação.
