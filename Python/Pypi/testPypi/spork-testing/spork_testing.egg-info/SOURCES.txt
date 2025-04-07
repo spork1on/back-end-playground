@@ -1,0 +1,6 @@
+setup.py
+test
+spork_testing.egg-info/PKG-INFO
+spork_testing.egg-info/SOURCES.txt
+spork_testing.egg-info/dependency_links.txt
+spork_testing.egg-info/top_level.txt
