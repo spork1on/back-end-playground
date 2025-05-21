@@ -1,0 +1,37 @@
+# Dependências gerenciadas pelo Poetry
+__pypackages__/
+*.lock
+
+# Arquivos de cache do Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Banco de dados local SQLite (se estiver usando SQLite)
+*.sqlite3
+*.db
+
+# Arquivos de ambiente virtual (caso use venv)
+.env
+.venv/
+venv/
+ENV/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+
+# Arquivos de migração gerados pelo Flask-Migrate
+migrations/versions/*.pyc
+migrations/versions/*.pyo
+migrations/versions/__pycache__/
+
+# Configurações locais (por exemplo, configurações de desenvolvimento)
+instance/
+config.py
+dio_bank.sqlite
+
+# Outros arquivos ignoráveis
+.DS_Store
+Thumbs.db
