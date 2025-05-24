@@ -1,4 +1,5 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy import inspect
 from src.app import User, db
 from http import HTTPStatus
@@ -25,6 +26,7 @@ def _list_users():
 
 
 @bp.route('/', methods=['GET', 'POST'])
+@jwt_required()
 def handle_user():
     if request.method == 'POST':
         _create_user()

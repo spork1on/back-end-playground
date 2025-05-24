@@ -7,12 +7,14 @@ from flask import Flask, current_app
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from flask_jwt_extended import JWTManager
 
 class Base(DeclarativeBase):
   pass
 
 db = SQLAlchemy(model_class=Base)
 migrate = Migrate()
+jwt = JWTManager()
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
@@ -48,6 +50,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         SQLALCHEMY_DATABASE_URI='sqlite:///dio_bank.sqlite',
+        JWT_SECRET_KEY = 'super-secret',
         )
     
 
@@ -70,9 +73,11 @@ def create_app(test_config=None):
     #initializing extensions
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
 
-    from src.controllers import user
+    from src.controllers import user, auth
     app.register_blueprint(user.bp)
+    app.register_blueprint(auth.bp)
     
     return app
 
