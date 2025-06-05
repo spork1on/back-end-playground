@@ -1,4 +1,3 @@
-import click
 import os
 import sqlalchemy as sa
 
@@ -6,7 +5,7 @@ from datetime import datetime
 from flask import Flask, current_app
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from flask_jwt_extended import JWTManager
 
 class Base(DeclarativeBase):
@@ -15,15 +14,31 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 migrate = Migrate()
 jwt = JWTManager()
+jwt_blacklist = set()
+
+@jwt.token_in_blocklist_loader
+def check_if_token_in_blacklist(jwt_header, jwt_payload):
+    return jwt_payload["jti"] in jwt_blacklist
+
+class Role(db.Model):
+    id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(sa.String, nullable=False)
+    user: Mapped[list["User"]] = relationship(back_populates="role")
+
+    def __repr__(self):
+        return f"Role={self.id!r}, name={self.name!r}"
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
     username: Mapped[str] = mapped_column(sa.String(20), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(sa.String, nullable=False)
     email: Mapped[str] = mapped_column(sa.String(120), unique=True, nullable=False)
     active: Mapped[bool] = mapped_column(sa.Boolean, default=True)
-    
+    role_id: Mapped[int] = mapped_column(sa.ForeignKey("role.id"))
+    role: Mapped["Role"] = relationship(back_populates="user")
+
     def __repr__(self) -> str:
-        return f"User(id={self.id!r}, username={self.username!r}, email={self.email!r}, active={self.active!r})"
+        return f"User(id={self.id!r}, username={self.username!r}, email={self.email!r}, active={self.active!r}"
 
 class Post(db.Model):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
@@ -34,15 +49,6 @@ class Post(db.Model):
 
     def __repr__(self) -> str:
         return f"id={self.id!r}, title={self.title!r}, author_id={self.author_id!r})"
-
-
-@click.command('init-db')
-def init_db_command():
-    """Clear the existing data and create new tables."""
-    global db
-    with current_app.app_context():
-        db.create_all()
-    click.echo('Initialized the database.')
 
 def create_app(test_config=None):
     # create and configure the app
@@ -67,17 +73,15 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    #register CLI command
-    app.cli.add_command(init_db_command)
-
     #initializing extensions
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
 
-    from src.controllers import user, auth
+    from src.controllers import user, auth, role
     app.register_blueprint(user.bp)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(role.bp)
     
     return app
 
